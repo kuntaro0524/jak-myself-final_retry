@@ -1,6 +1,6 @@
 import { Flex, Heading, useDisclosure } from "@chakra-ui/react";
-import { memo, VFC } from "react";
-import { Link } from "react-router-dom";
+import { memo, useCallback, VFC } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 import { MenuIconButton } from "../../button/MenuIconButton";
 import { MenuDrawer } from "../../molecules/MenuDrawer";
@@ -8,6 +8,14 @@ import { MenuDrawer } from "../../molecules/MenuDrawer";
 export const Header: VFC = memo(() => {
   // Drawerを描くとか開くとか閉じるとかいう chakra-UIが提供している hooks を利用する
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // react-router-dom　のフックスを利用する
+  const history = useHistory();
+
+  // useHistory hooksを利用して画面遷移のボタンの関数を定義する
+  // この関数は MenuDrawer コンポーネントに渡していくことになるため、再レンダリングを防止するための仕組みを入れておくと良い(useCallback)
+  // 第２引数に何を入れるのかという議論： history を入れても入れなくても良い→eslintの設定をうるさくしないならばカラ配列でも良いのでは？
+  const onClickHome = useCallback(() => history.push("/home"), [history]);
 
   // Flex boxみたいなものが簡単に実現する
   // naviタグにしてやる
@@ -31,7 +39,13 @@ export const Header: VFC = memo(() => {
       Flexで囲ってあげてクリックできるようにするために a タグとする
       右側マージン 8px
       カーソルのポインタを変更するのも設定*/}
-        <Flex align="center" as="a" mr={8} _hover={{ cursor: "pointer" }}>
+        <Flex
+          align="center"
+          as="a"
+          mr={8}
+          _hover={{ cursor: "pointer" }}
+          onClick={onClickHome}
+        >
           <Heading as="h1" fontSize={{ base: "md", md: "lg" }}>
             ユーザ管理アプリ
           </Heading>
