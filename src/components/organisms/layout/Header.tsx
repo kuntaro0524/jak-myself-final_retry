@@ -71,10 +71,10 @@ export const Header: VFC = memo(() => {
       <Drawer placement="left" size="xs" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay>
           <DrawerContent>
-            <DrawerBody>
-              <Button> Top </Button>
-              <Button> ユーザ一覧 </Button>
-              <Button> 設定画面 </Button>
+            <DrawerBody p={0} bg="gray.100">
+              <Button w="100%"> Top </Button>
+              <Button w="100%"> ユーザ一覧 </Button>
+              <Button w="100%"> 設定画面 </Button>
             </DrawerBody>
           </DrawerContent>
         </DrawerOverlay>
