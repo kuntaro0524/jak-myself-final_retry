@@ -3,6 +3,7 @@
 // ver6にしたとき、こうやってコンポーネントをそれぞれのページに設定して、引数の element にどうやって渡せばよいかわからないまま諦めてver5 に戻った
 
 import { Home } from "../pages/Home";
+import { Page404 } from "../pages/Page404";
 import { Setting } from "../pages/Setting";
 import { UserManagement } from "../pages/UserManagement";
 
@@ -21,5 +22,11 @@ export const homeRoutes = [
     path: "/setting",
     exact: false,
     children: <Setting />
+  },
+  // home routeを通ってきた場合にはここにも書いておかないと駄目
+  {
+    path: "*",
+    exact: false,
+    children: <Page404 />
   }
 ];
