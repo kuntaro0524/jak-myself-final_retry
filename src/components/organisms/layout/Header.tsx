@@ -1,6 +1,6 @@
 import { Link, Flex, Heading, useDisclosure } from "@chakra-ui/react";
 import { memo, useCallback, VFC } from "react";
-import {  useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { MenuIconButton } from "../../button/MenuIconButton";
 import { MenuDrawer } from "../../molecules/MenuDrawer";
@@ -70,7 +70,13 @@ export const Header: VFC = memo(() => {
         {/* 新たにatomsに作ったボタンを呼び出してあげる。 */}
         <MenuIconButton onOpen={onOpen} />
         {/* この部分もコンポーネントにしてmoleculeに登録 */}
-        <MenuDrawer onClose={onClose} isOpen={isOpen} />
+        <MenuDrawer
+          onClose={onClose}
+          isOpen={isOpen}
+          onClickHome={onClickHome}
+          onClickSetting={onClickSetting}
+          onClickUserManagement={onClickUserManagement}
+        />
       </Flex>
     </>
   );

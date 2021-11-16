@@ -11,10 +11,19 @@ type Props = {
   // voidの関数を定義するときはこんな感じみたい
   onClose: () => void;
   isOpen: boolean;
+  onClickHome: () => void;
+  onClickUserManagement: () => void;
+  onClickSetting: () => void;
 };
 
 export const MenuDrawer: VFC<Props> = memo((props) => {
-  const { onClose, isOpen } = props;
+  const {
+    onClose,
+    isOpen,
+    onClickHome,
+    onClickUserManagement,
+    onClickSetting
+  } = props;
   return (
     // 左から表示を出す: placement="left"
     // sizeも指定できる　*/}
@@ -22,9 +31,15 @@ export const MenuDrawer: VFC<Props> = memo((props) => {
       <DrawerOverlay>
         <DrawerContent>
           <DrawerBody p={0} bg="gray.100">
-            <Button w="100%"> Top </Button>
-            <Button w="100%"> ユーザ一覧 </Button>
-            <Button w="100%"> 設定画面 </Button>
+            <Button w="100%" onClick={onClickHome}>
+              Top
+            </Button>
+            <Button w="100%" onClick={onClickUserManagement}>
+              ユーザ一覧
+            </Button>
+            <Button w="100%" onClick={onClickSetting}>
+              設定画面
+            </Button>
           </DrawerBody>
         </DrawerContent>
       </DrawerOverlay>
