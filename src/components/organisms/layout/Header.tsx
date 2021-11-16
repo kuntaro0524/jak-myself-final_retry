@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
 import { MenuIconButton } from "../../button/MenuIconButton";
+import { MenuDrawer } from "../../molecules/MenuDrawer";
 
 export const Header: VFC = memo(() => {
   // Drawerを描くとか開くとか閉じるとかいう chakra-UIが提供している hooks を利用する
@@ -58,20 +59,9 @@ export const Header: VFC = memo(() => {
         </Flex>
         {/* 新たにatomsに作ったボタンを呼び出してあげる。 */}
         <MenuIconButton onOpen={onOpen} />
+        {/* この部分もコンポーネントにしてmoleculeに登録 */}
+        <MenuDrawer onClose={onClose} isOpen={isOpen} />
       </Flex>
-      {/* 左から表示を出す: placement="left" 
-      sizeも指定できる　*/}
-      <Drawer placement="left" size="xs" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay>
-          <DrawerContent>
-            <DrawerBody p={0} bg="gray.100">
-              <Button w="100%"> Top </Button>
-              <Button w="100%"> ユーザ一覧 </Button>
-              <Button w="100%"> 設定画面 </Button>
-            </DrawerBody>
-          </DrawerContent>
-        </DrawerOverlay>
-      </Drawer>
     </>
   );
 });
