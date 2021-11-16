@@ -16,6 +16,13 @@ export const Header: VFC = memo(() => {
   // この関数は MenuDrawer コンポーネントに渡していくことになるため、再レンダリングを防止するための仕組みを入れておくと良い(useCallback)
   // 第２引数に何を入れるのかという議論： history を入れても入れなくても良い→eslintの設定をうるさくしないならばカラ配列でも良いのでは？
   const onClickHome = useCallback(() => history.push("/home"), [history]);
+  const onClickUserManagement = useCallback(
+    () => history.push("/home/user_management"),
+    [history]
+  );
+  const onClickSetting = useCallback(() => history.push("/home/setting"), [
+    history
+  ]);
 
   // Flex boxみたいなものが簡単に実現する
   // naviタグにしてやる
@@ -57,8 +64,8 @@ export const Header: VFC = memo(() => {
           flexGrow={2}
           display={{ base: "none", md: "flex" }}
         >
-          <Link> ユーザー一覧 </Link>
-          <Link> 設定 </Link>
+          <Link onClick={onClickUserManagement}> ユーザー一覧 </Link>
+          <Link onClick={onClickSetting}> 設定 </Link>
         </Flex>
         {/* 新たにatomsに作ったボタンを呼び出してあげる。 */}
         <MenuIconButton onOpen={onOpen} />
