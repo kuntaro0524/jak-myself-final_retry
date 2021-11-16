@@ -13,6 +13,8 @@ import { memo, VFC } from "react";
 import { Link } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
+import { MenuIconButton } from "../../button/MenuIconButton";
+
 export const Header: VFC = memo(() => {
   // Drawerを描くとか開くとか閉じるとかいう chakra-UIが提供している hooks を利用する
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -54,17 +56,8 @@ export const Header: VFC = memo(() => {
           <Link> ユーザー一覧 </Link>
           <Link> 設定 </Link>
         </Flex>
-        {/* 画面が小さいときにハンバーガーメニューを表示したい */}
-        <IconButton
-          aria-label="Menu button"
-          icon={<HamburgerIcon />}
-          size="sm"
-          variant="unstyled"
-          // base: 携帯のときは、みたいなこと（画面サイズ）、md以上で表示なしという設定
-          display={{ base: "block", md: "none" }}
-          // クリックしたときに Drawer をオープするかどうかというカスタムフックを利用する
-          onClick={onOpen}
-        />
+        {/* 新たにatomsに作ったボタンを呼び出してあげる。 */}
+        <MenuIconButton onOpen={onOpen} />
       </Flex>
       {/* 左から表示を出す: placement="left" 
       sizeも指定できる　*/}
