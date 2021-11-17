@@ -9,9 +9,12 @@ import {
 } from "@chakra-ui/react";
 
 import { ChangeEvent, memo, useState, VFC } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { PrimaryButton } from "../button/PrimaryButton";
 
 export const Login: VFC = memo(() => {
+  // カスタムフックを使います
+  const { login, loading } = useAuth();
   // ログインインプット文字列のところから値を取得するための useState
   // TypeScriptを使っていてもuseStateには初期値を（）内で渡すと型推定をしてくれるので簡単な場合には指定する必要はない
   const [userID, setUserId] = useState("");
@@ -19,6 +22,8 @@ export const Login: VFC = memo(() => {
   // Inputから得られるイベントの型指定は覚えるしか無い！
   const onChangeUserId = (e: ChangeEvent<HTMLInputElement>) =>
     setUserId(e.target.value);
+
+  const onClickLogin = () => login(userID);
 
   return (
     <Flex align="center" justify="center" height="100vh">
@@ -38,7 +43,7 @@ export const Login: VFC = memo(() => {
             // Inputに入力された値が変化したとき useState で値を設定する
             onChange={onChangeUserId}
           />
-          <PrimaryButton> ログイン </PrimaryButton>
+          <PrimaryButton onClick={onClickLogin}> ログイン </PrimaryButton>
         </Stack>
       </Box>
     </Flex>
