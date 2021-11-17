@@ -43,7 +43,14 @@ export const Login: VFC = memo(() => {
             // Inputに入力された値が変化したとき useState で値を設定する
             onChange={onChangeUserId}
           />
-          <PrimaryButton onClick={onClickLogin}> ログイン </PrimaryButton>
+          {/* userIDに文字列が入っていないときにはボタンを押せないようにした */}
+          <PrimaryButton
+            loading={loading}
+            disabled={userID === ""}
+            onClick={onClickLogin}
+          >
+            ログイン
+          </PrimaryButton>
         </Stack>
       </Box>
     </Flex>
