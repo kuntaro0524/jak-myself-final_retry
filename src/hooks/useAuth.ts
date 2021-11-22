@@ -4,8 +4,10 @@ import { useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { User } from "../components/types/api/user";
+import { useMessage } from "../hooks/useMessage";
 
 export const useAuth = () => {
+  const { showMessage } = useMessage();
   // ユーザが見つかったときにHOME画面に遷移する情報
   const history = useHistory();
 
@@ -20,16 +22,25 @@ export const useAuth = () => {
         .then((res) => {
           // axiosでデータを取得し、中身があればHOME画面に遷移するということにする
           if (res.data) {
+            showMessage({
+              title: "ログインしました",
+              status: "success"
+            });
             history.push("home");
           } else {
-            alert("ユーザが見つかりません");
+            showMessage({
+              title: "ユーザが見つかりません",
+              status: "error"
+            });
           }
         })
-        .catch(() => alert("ログインできません"))
+        .catch(() =>
+          showMessage({ title: "ログインできません", status: "error" })
+        )
         // どちらに転んでもフラグをfalseに設定し直す
         .finally(() => setLoading(false));
     },
-    [history]
+    [history, showMessage]
   );
 
   return { login, loading };

@@ -1,16 +1,8 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Heading,
-  Input,
-  Stack
-} from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Input, Stack } from "@chakra-ui/react";
 
 import { ChangeEvent, memo, useState, VFC } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { PrimaryButton } from "../button/PrimaryButton";
+import { PrimaryButton } from "../atoms/button/PrimaryButton";
 
 export const Login: VFC = memo(() => {
   // カスタムフックを使います
