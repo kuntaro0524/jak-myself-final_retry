@@ -3,7 +3,8 @@ import { memo, VFC } from "react";
 
 export const UserManagement: VFC = memo(() => {
   return (
-    <Wrap>
+    // spacingをしたいときはここに噛ませてあげる
+    <Wrap spacing="30px">
       {[...Array(10)].map(() => (
         <WrapItem>
           <div
