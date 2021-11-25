@@ -10,7 +10,7 @@ export const useAllUsers = () => {
   const [loading, setLoading] = useState<boolean>();
 
   // ユーザの配列として users を定義するということを型指定で明瞭にしておく
-  const [users, setUsers] = useState<Array<User>>();
+  const [users, setUsers] = useState<Array<User>>([]);
 
   const getUsers = useCallback(() => {
     setLoading(true);
