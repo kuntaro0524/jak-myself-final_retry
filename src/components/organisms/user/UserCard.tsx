@@ -5,11 +5,13 @@ type Props = {
   imageUrl: string;
   userName: string;
   fullName: string;
+  // Modalを開くのはこのコンポーネントのBoxがクリックされたとき
+  onClick: () => void;
 };
 
 export const UserCard: VFC<Props> = memo((props) => {
   // propsで渡されない場合には disabled と loading は　デフォルト false
-  const { imageUrl, userName, fullName } = props;
+  const { imageUrl, userName, fullName, onClick } = props;
   return (
     <Box
       w="260px"
@@ -22,6 +24,7 @@ export const UserCard: VFC<Props> = memo((props) => {
       // Boxにhoverしたときの挙動を決める
       // カーソルがポインタになり、透明度を0.8にする
       _hover={{ cursor: "pointer", opacity: 0.8 }}
+      onClick={onClick}
     >
       {/* Stackで囲んでおくとスペーシングとかが楽ちんになる */}
       <Stack>

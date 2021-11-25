@@ -6,7 +6,11 @@ import {
   Image,
   Text,
   Center,
-  Spinner
+  Spinner,
+  Modal,
+  ModalContent,
+  useDisclosure,
+  ModalOverlay
 } from "@chakra-ui/react";
 import { memo, useEffect, VFC } from "react";
 
@@ -22,6 +26,12 @@ export const UserManagement: VFC = memo(() => {
 
   // 最初に一回だけ呼びたいときは useEffect を利用する→これは覚えておかないと！
   useEffect(() => getUsers(), []);
+
+  // Modalを利用するための手順
+  // カスタムフックで状態管理の変数を得る
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  // Modalを表示するための関数をここで準備して UserCard に渡してあげる
+  const onClickOpen = () => onOpen();
 
   return (
     <>
@@ -40,11 +50,20 @@ export const UserManagement: VFC = memo(() => {
                 userName={user.name}
                 fullName={user.username}
                 imageUrl="https://source.unsplash.com/random"
+                // ユーザカードで表示している Box を押したら発動する
+                onClick={onClickOpen}
               />
             </WrapItem>
           ))}
         </Wrap>
       )}
+      {/* モーダルを追加していく */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <p> これがテストジャから </p>
+        </ModalContent>
+      </Modal>
     </>
   );
 });
