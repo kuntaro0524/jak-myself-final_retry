@@ -32,13 +32,17 @@ export const UserManagement: VFC = memo(() => {
       ) : (
         // paddingの設定を画面の大きさで分ける
         <Wrap p={{ base: 4, md: 10 }}>
-          <WrapItem>
-            <UserCard
-              userName="くんたろーさん"
-              fullName="平田邦生"
-              imageUrl="https://source.unsplash.com/random"
-            />
-          </WrapItem>
+          {/* ユーザごとの情報をmapで表示する */}
+          {users.map((user) => (
+            // 画面が狭くなったときにマージンを自動で調整する mx="auto"
+            <WrapItem key={user.id} justify="center">
+              <UserCard
+                userName={user.name}
+                fullName={user.username}
+                imageUrl="https://source.unsplash.com/random"
+              />
+            </WrapItem>
+          ))}
         </Wrap>
       )}
     </>
