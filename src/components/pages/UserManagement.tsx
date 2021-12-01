@@ -1,26 +1,14 @@
 import {
   Wrap,
   WrapItem,
-  Box,
-  Stack,
-  Image,
-  Text,
   Center,
   Spinner,
-  Modal,
-  ModalContent,
-  useDisclosure,
-  ModalOverlay,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  FormControl,
-  FormLabel,
-  Input
+  useDisclosure
 } from "@chakra-ui/react";
 import { memo, useCallback, useEffect, VFC } from "react";
 
 import { UserCard } from "../organisms/user/UserCard";
+import { UserDetailModal } from "../organisms/user/UserDetailModal";
 
 // カスタムフックスって呼び方が特殊ですね。これはコンポーネントの全体の名前やねんな
 import { useAllUsers } from "../../hooks/useAllUsers";
@@ -35,6 +23,7 @@ export const UserManagement: VFC = memo(() => {
 
   // Modalを利用するための手順
   // カスタムフックで状態管理の変数を得る
+  // onClose: closeボタンを押したときの挙動
   const { isOpen, onOpen, onClose } = useDisclosure();
   // Modalを表示するための関数をここで準備して UserCard に渡してあげる
   // propsとして渡す関数→useCallBackで囲っておくのが良い
@@ -62,45 +51,10 @@ export const UserManagement: VFC = memo(() => {
               />
             </WrapItem>
           ))}
+          {/* Modalをコンポーネント化したのでここに入れておく */}
+          <UserDetailModal isOpen={isOpen} onClose={onClose} />
         </Wrap>
       )}
-      {/* モーダルを追加していく */}
-      {/* 自動フォーカスがあたってしまっている（modal の close button) */}
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        autoFocus={false}
-        motionPreset="slideInBottom"
-      >
-        <ModalOverlay />
-        {/* padding bottomの設定 */}
-        <ModalContent pb={6}>
-          <ModalHeader> ユーザ詳細 </ModalHeader>
-          <ModalCloseButton />
-          {/* マージンを調整 */}
-          <ModalBody mx={4}>
-            {/* 項目を並べるためにStackは入れておこう（配列調整がしやすい） これは */}
-            <Stack>
-              <FormControl>
-                <FormLabel>名前</FormLabel>
-                <Input value="平田邦生" isReadOnly />
-              </FormControl>
-              <FormControl>
-                <FormLabel>フルネーム</FormLabel>
-                <Input value="Kunio Hirata" isReadOnly />
-              </FormControl>
-              <FormControl>
-                <FormLabel>MAIL</FormLabel>
-                <Input value="12345@example.com" isReadOnly />
-              </FormControl>
-              <FormControl>
-                <FormLabel>TEL</FormLabel>
-                <Input value="08053191649" isReadOnly />
-              </FormControl>
-            </Stack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </>
   );
 });
