@@ -11,7 +11,8 @@ import { User } from "../types/api/user";
 
 // 保持する型と設定関数
 export type LoginUserContextType = {
-  loginUser: User | null;
+  // &を利用することで、User と boolean を有するあたらしい型　の指定ができるらしい。
+  loginUser: (User & { isAdmin: boolean }) | null;
   // useState などの更新関数の型は以下のようになるらしい→おぼえげー
   setLoginUser: Dispatch<SetStateAction<User | null>>;
 };
