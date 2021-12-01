@@ -1,12 +1,26 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
+import { User } from "../components/types/api/user";
 // User IDを元にユーザ情報を抜き出してくるカスタムフック
 
-export const useSelectUser = () => {
-  // 選択されたユーザの情報
-  const [selectedUser, setSelectedUser] = useState();
-  // 選択されたユーザの情報を取得する関数
-  const onSelectUser = useCallback(() => {}, []);
+type Props = {
+  id: number;
+  // ユーザ情報の配列なので
+  users: Array<User>;
+};
 
-  return { onSelectUser };
+export const useSelectUsers = () => {
+  // 選択されたユーザの情報を格納
+  const [selectedUser, setSelectedUser] = useState<User>(null);
+  // 選択されたユーザの情報を取得する関数
+  // 引数→ユーザのID番号、ユーザの一覧
+  const onSelectUser = useCallback((props: Props) => {
+    const { id, users } = props;
+    // 受け取った配列の中に指定したIDと一致するユーザを targetUser として設定
+    const targetUser: User = users.find((user) => user.id === id);
+    // カスタムフック内部の変数に格納する
+    setSelectedUser(targetUser);
+  }, []);
+
+  return { selectedUser, onSelectUser };
 };

@@ -9,14 +9,20 @@ import { memo, useCallback, useEffect, VFC } from "react";
 
 import { UserCard } from "../organisms/user/UserCard";
 import { UserDetailModal } from "../organisms/user/UserDetailModal";
+import { User } from "../types/api/user";
 
 // カスタムフックスって呼び方が特殊ですね。これはコンポーネントの全体の名前やねんな
 import { useAllUsers } from "../../hooks/useAllUsers";
+// ユーザ情報を配列から探す（ID番号で）カスタムフックス
+import { useSelectUsers } from "../../hooks/useSelectUsers";
 
 export const UserManagement: VFC = memo(() => {
   // カスタムフックから呼び出す
   // フックの中に定義した関数や変数はこうやって取り出すのか
   const { getUsers, users, loading } = useAllUsers();
+
+  // 制御部分のカスタムフック
+  const { selectedUser, onSelectUser } = useSelectUsers();
 
   // 最初に一回だけ呼びたいときは useEffect を利用する→これは覚えておかないと！
   useEffect(() => getUsers(), []);
@@ -28,7 +34,7 @@ export const UserManagement: VFC = memo(() => {
   // Modalを表示するための関数をここで準備して UserCard に渡してあげる
   // propsとして渡す関数→useCallBackで囲っておくのが良い
   const onClickUser = useCallback((id: number) => {
-    console.log(id);
+    onSelectUser(id, users);
     onOpen();
   }, []);
 
