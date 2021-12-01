@@ -10,9 +10,15 @@ import {
   Modal,
   ModalContent,
   useDisclosure,
-  ModalOverlay
+  ModalOverlay,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  FormControl,
+  FormLabel,
+  Input
 } from "@chakra-ui/react";
-import { memo, useEffect, VFC } from "react";
+import { memo, useCallback, useEffect, VFC } from "react";
 
 import { UserCard } from "../organisms/user/UserCard";
 
@@ -31,7 +37,8 @@ export const UserManagement: VFC = memo(() => {
   // カスタムフックで状態管理の変数を得る
   const { isOpen, onOpen, onClose } = useDisclosure();
   // Modalを表示するための関数をここで準備して UserCard に渡してあげる
-  const onClickOpen = () => onOpen();
+  // propsとして渡す関数→useCallBackで囲っておくのが良い
+  const onClickUser = useCallback(() => onOpen(), []);
 
   return (
     <>
@@ -51,7 +58,7 @@ export const UserManagement: VFC = memo(() => {
                 fullName={user.username}
                 imageUrl="https://source.unsplash.com/random"
                 // ユーザカードで表示している Box を押したら発動する
-                onClick={onClickOpen}
+                onClick={onClickUser}
               />
             </WrapItem>
           ))}
@@ -61,7 +68,29 @@ export const UserManagement: VFC = memo(() => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <p> これがテストジャから </p>
+          <ModalHeader> ユーザ詳細 </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {/* 項目を並べるためにStackは入れておこう（配列調整がしやすい） これは */}
+            <Stack>
+              <FormControl>
+                <FormLabel>名前</FormLabel>
+                <Input value="平田邦生" isReadOnly />
+              </FormControl>
+              <FormControl>
+                <FormLabel>フルネーム</FormLabel>
+                <Input value="Kunio Hirata" isReadOnly />
+              </FormControl>
+              <FormControl>
+                <FormLabel>MAIL</FormLabel>
+                <Input value="12345@example.com" isReadOnly />
+              </FormControl>
+              <FormControl>
+                <FormLabel>TEL</FormLabel>
+                <Input value="08053191649" isReadOnly />
+              </FormControl>
+            </Stack>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>
