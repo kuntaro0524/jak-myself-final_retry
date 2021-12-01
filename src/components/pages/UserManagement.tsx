@@ -16,6 +16,7 @@ import { useAllUsers } from "../../hooks/useAllUsers";
 import { useSelectUsers } from "../../hooks/useSelectUsers";
 // ユーザの型
 import { User } from "../types/api/user";
+import { useLoginUser } from "../../hooks/useLoginUser";
 
 export const UserManagement: VFC = memo(() => {
   // カスタムフックから呼び出す
@@ -43,6 +44,11 @@ export const UserManagement: VFC = memo(() => {
     // 依存配列の変更があったときに実行するという設定。今回は入れるほうが良い
     [users]
   );
+
+  // contextでは変数と設定関数を定義しているが、変数のみを参照している
+  // ログインしているユーザの情報だけを得ている
+  const { loginUser } = useLoginUser();
+  console.log(loginUser);
 
   return (
     <>

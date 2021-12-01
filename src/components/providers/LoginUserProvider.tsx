@@ -10,14 +10,15 @@ import React, {
 import { User } from "../types/api/user";
 
 // 保持する型と設定関数
-type LoginUserContextType = {
+export type LoginUserContextType = {
   loginUser: User | null;
   // useState などの更新関数の型は以下のようになるらしい→おぼえげー
   setLoginUser: Dispatch<SetStateAction<User | null>>;
 };
 
 // Type scriptの表現方法として {} を as で受けて型を指定する
-const LoginUserContext = createContext<LoginUserContextType>(
+// ちゃんとexportしましょう
+export const LoginUserContext = createContext<LoginUserContextType>(
   {} as LoginUserContextType
 );
 
