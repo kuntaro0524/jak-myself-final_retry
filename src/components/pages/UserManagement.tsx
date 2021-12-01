@@ -34,7 +34,8 @@ export const UserManagement: VFC = memo(() => {
   // Modalを表示するための関数をここで準備して UserCard に渡してあげる
   // propsとして渡す関数→useCallBackで囲っておくのが良い
   const onClickUser = useCallback((id: number) => {
-    onSelectUser(id, users);
+    // propsはオブジェクトで渡すのだった・・・・
+    onSelectUser({ id, users });
     onOpen();
   }, []);
 
