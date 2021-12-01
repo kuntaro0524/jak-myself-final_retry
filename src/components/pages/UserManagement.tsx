@@ -9,12 +9,13 @@ import { memo, useCallback, useEffect, VFC } from "react";
 
 import { UserCard } from "../organisms/user/UserCard";
 import { UserDetailModal } from "../organisms/user/UserDetailModal";
-import { User } from "../types/api/user";
 
 // カスタムフックスって呼び方が特殊ですね。これはコンポーネントの全体の名前やねんな
 import { useAllUsers } from "../../hooks/useAllUsers";
 // ユーザ情報を配列から探す（ID番号で）カスタムフックス
 import { useSelectUsers } from "../../hooks/useSelectUsers";
+// ユーザの型
+import { User } from "../types/api/user";
 
 export const UserManagement: VFC = memo(() => {
   // カスタムフックから呼び出す
@@ -33,11 +34,15 @@ export const UserManagement: VFC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // Modalを表示するための関数をここで準備して UserCard に渡してあげる
   // propsとして渡す関数→useCallBackで囲っておくのが良い
-  const onClickUser = useCallback((id: number) => {
-    // propsはオブジェクトで渡すのだった・・・・
-    // カスタムフックの中でModalを開くところまでやっても良いので onOpen(Modalのやつ)も渡してしまう
-    onSelectUser({ id, users, onOpen });
-  }, []);
+  const onClickUser = useCallback(
+    (id: number) => {
+      // propsはオブジェクトで渡すのだった・・・・
+      // カスタムフックの中でModalを開くところまでやっても良いので onOpen(Modalのやつ)も渡してしまう
+      onSelectUser({ id, users, onOpen });
+    },
+    // 依存配列の変更があったときに実行するという設定。今回は入れるほうが良い
+    [users]
+  );
 
   return (
     <>
@@ -65,7 +70,13 @@ export const UserManagement: VFC = memo(() => {
             </WrapItem>
           ))}
           {/* Modalをコンポーネント化したのでここに入れておく */}
-          <UserDetailModal isOpen={isOpen} onClose={onClose} />
+          {/* selectedUserを引数として渡してModalを書く */}
+          {/* Modalをここに書くってのは何かなじまないと違和感あるな */}
+          <UserDetailModal
+            user={selectedUser}
+            isOpen={isOpen}
+            onClose={onClose}
+          />
         </Wrap>
       )}
     </>

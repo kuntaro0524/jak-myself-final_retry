@@ -13,14 +13,20 @@ import {
   Input
 } from "@chakra-ui/react";
 
+// Propsを定義するために必要なインポート
+import { User } from "../../types/api/user";
+
 type Props = {
+  // ユーザ情報を受け取るのだが、これはnullの可能性もある
+  user: User | null;
   isOpen: boolean;
   onClose: () => void;
 };
 
 export const UserDetailModal: VFC<Props> = memo((props) => {
   // propsで渡されない場合には disabled と loading は　デフォルト false
-  const { isOpen, onClose } = props;
+  // userを引数として受け取り、それを利用して情報を表示する
+  const { isOpen, onClose, user } = props;
   return (
     <div>
       {/* モーダルを追加していく */}
@@ -42,19 +48,20 @@ export const UserDetailModal: VFC<Props> = memo((props) => {
             <Stack>
               <FormControl>
                 <FormLabel>名前</FormLabel>
-                <Input value="平田邦生" isReadOnly />
+                {/* nullの可能性があるよ、と指定してあるのでオプショナルチェイニングが発動している */}
+                <Input value={user?.name} isReadOnly />
               </FormControl>
               <FormControl>
                 <FormLabel>フルネーム</FormLabel>
-                <Input value="Kunio Hirata" isReadOnly />
+                <Input value={user?.username} isReadOnly />
               </FormControl>
               <FormControl>
                 <FormLabel>MAIL</FormLabel>
-                <Input value="12345@example.com" isReadOnly />
+                <Input value={user?.email} isReadOnly />
               </FormControl>
               <FormControl>
                 <FormLabel>TEL</FormLabel>
-                <Input value="08053191649" isReadOnly />
+                <Input value={user?.phone} isReadOnly />
               </FormControl>
             </Stack>
           </ModalBody>
