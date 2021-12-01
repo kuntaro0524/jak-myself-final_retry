@@ -2,16 +2,19 @@ import { Box, Image, Stack, Text } from "@chakra-ui/react";
 import { memo, ReactNode, VFC } from "react";
 
 type Props = {
+  id: number;
   imageUrl: string;
   userName: string;
   fullName: string;
   // Modalを開くのはこのコンポーネントのBoxがクリックされたとき
-  onClick: () => void;
+  // クリックされたときにユーザの情報を渡してあげるという設定
+  onClick: (id: Number) => void;
 };
 
 export const UserCard: VFC<Props> = memo((props) => {
   // propsで渡されない場合には disabled と loading は　デフォルト false
-  const { imageUrl, userName, fullName, onClick } = props;
+  // ちゃんとuseridを渡しておいてそれを利用する
+  const { id, imageUrl, userName, fullName, onClick } = props;
   return (
     <Box
       w="260px"
@@ -24,7 +27,7 @@ export const UserCard: VFC<Props> = memo((props) => {
       // Boxにhoverしたときの挙動を決める
       // カーソルがポインタになり、透明度を0.8にする
       _hover={{ cursor: "pointer", opacity: 0.8 }}
-      onClick={onClick}
+      onClick={() => onClick(id)}
     >
       {/* Stackで囲んでおくとスペーシングとかが楽ちんになる */}
       <Stack>

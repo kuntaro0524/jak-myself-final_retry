@@ -27,7 +27,10 @@ export const UserManagement: VFC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // Modalを表示するための関数をここで準備して UserCard に渡してあげる
   // propsとして渡す関数→useCallBackで囲っておくのが良い
-  const onClickUser = useCallback(() => onOpen(), []);
+  const onClickUser = useCallback((id: number) => {
+    console.log(id);
+    onOpen();
+  }, []);
 
   return (
     <>
@@ -42,7 +45,10 @@ export const UserManagement: VFC = memo(() => {
           {users.map((user) => (
             // 画面が狭くなったときにマージンを自動で調整する mx="auto"
             <WrapItem key={user.id} justify="center">
+              {/* Modalでユーザ情報を扱うために、カードをクリックしたときに　ID番号を渡す。
+              このためにUserCardにID番号を渡しておく必要がある */}
               <UserCard
+                id={user.id}
                 userName={user.name}
                 fullName={user.username}
                 imageUrl="https://source.unsplash.com/random"
