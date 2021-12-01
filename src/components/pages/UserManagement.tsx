@@ -65,12 +65,20 @@ export const UserManagement: VFC = memo(() => {
         </Wrap>
       )}
       {/* モーダルを追加していく */}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      {/* 自動フォーカスがあたってしまっている（modal の close button) */}
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        autoFocus={false}
+        motionPreset="slideInBottom"
+      >
         <ModalOverlay />
-        <ModalContent>
+        {/* padding bottomの設定 */}
+        <ModalContent pb={6}>
           <ModalHeader> ユーザ詳細 </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          {/* マージンを調整 */}
+          <ModalBody mx={4}>
             {/* 項目を並べるためにStackは入れておこう（配列調整がしやすい） これは */}
             <Stack>
               <FormControl>
