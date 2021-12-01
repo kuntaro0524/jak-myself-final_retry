@@ -9,12 +9,16 @@ import React, {
 
 import { User } from "../types/api/user";
 
+// 結局あたらしい型を定義するほうが使いまわしが簡単ですよって話で
+export type LoginUser = User & { isAdmin: boolean };
+
 // 保持する型と設定関数
 export type LoginUserContextType = {
-  // &を利用することで、User と boolean を有するあたらしい型　の指定ができるらしい。
-  loginUser: (User & { isAdmin: boolean }) | null;
+  // 新しく指定した型を使っていくスタイル
+  loginUser: LoginUser | null;
   // useState などの更新関数の型は以下のようになるらしい→おぼえげー
-  setLoginUser: Dispatch<SetStateAction<User | null>>;
+  // 新しく指定した型をここにも入れてあげる必要があるよ
+  setLoginUser: Dispatch<SetStateAction<LoginUser | null>>;
 };
 
 // Type scriptの表現方法として {} を as で受けて型を指定する
@@ -27,7 +31,8 @@ export const LoginUserContext = createContext<LoginUserContextType>(
 export const LoginUserProvider = (props: { children: ReactNode }) => {
   const { children } = props;
   // 再レンダリングする規模によっては変数と関数は別にしたほうが良い場合もある
-  const [loginUser, setLoginUser] = useState<User | null>(null);
+  // これもしっかりとあたらしい変数名を指定していくスタイル
+  const [loginUser, setLoginUser] = useState<LoginUser | null>(null);
   return (
     <LoginUserContext.Provider value={{ loginUser, setLoginUser }}>
       {children}

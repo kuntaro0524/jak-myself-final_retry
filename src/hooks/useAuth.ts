@@ -27,7 +27,9 @@ export const useAuth = () => {
         .then((res) => {
           // axiosでデータを取得し、中身があればHOME画面に遷移するということにする
           if (res.data) {
-            setLoginUser(res.data);
+            // ID番号が10になっている場合には管理者ということにする
+            const isAdmin = res.data.id === 10 ? true : false;
+            setLoginUser({ ...res.data, isAdmin });
             showMessage({
               title: "ログインしました",
               status: "success"
