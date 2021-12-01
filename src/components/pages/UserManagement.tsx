@@ -35,8 +35,8 @@ export const UserManagement: VFC = memo(() => {
   // propsとして渡す関数→useCallBackで囲っておくのが良い
   const onClickUser = useCallback((id: number) => {
     // propsはオブジェクトで渡すのだった・・・・
-    onSelectUser({ id, users });
-    onOpen();
+    // カスタムフックの中でModalを開くところまでやっても良いので onOpen(Modalのやつ)も渡してしまう
+    onSelectUser({ id, users, onOpen });
   }, []);
 
   return (
